@@ -5,6 +5,7 @@
 **Added:**
 
 - Initial project files
+- Task 1 solution
 
 **Updated:**
 
