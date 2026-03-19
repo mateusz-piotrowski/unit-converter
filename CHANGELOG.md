@@ -2,6 +2,10 @@
 
 ## [0.0.3] (March 19, 2026)
 
+**Added:**
+
+- Initial project files
+
 **Updated:**
 
 - .gitignore file
