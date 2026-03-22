@@ -1,5 +1,15 @@
 # The Changelog
 
+## [0.0.5] (March 23, 2026)
+
+**Added:**
+
+- Task 3 solution
+
+**Updated:**
+
+- Improve input handling
+
 ## [0.0.4] (March 21, 2026)
 
 **Added:**
