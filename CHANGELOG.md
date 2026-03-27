@@ -1,5 +1,11 @@
 # The Changelog
 
+## [0.0.6] (March 27, 2026)
+
+**Added:**
+
+- Task 4 solution
+
 ## [0.0.5] (March 23, 2026)
 
 **Added:**
@@ -29,7 +35,8 @@
 
 ## [0.0.2] (December 27, 2025)
 
-### Added:
+**Added:**
+
 - .gitignore file
 - GitHub Actions CI workflow
 - Good practices in `SECURITY.md`
@@ -37,7 +44,8 @@
 - Development setup instructions in `CONTRIBUTING.md`
 - Badges and Getting Started section in `README.md`
 
-### Changed:
+**Changed:**
+
 - Updated GitHub Actions CI workflow to use generic placeholders for environment setup and testing
 - Updated development setup instructions in `CONTRIBUTING.md` to use generic placeholders
 
@@ -48,4 +56,3 @@
 - LICENSE
 - CHANGELOG.md
 - README.md
-

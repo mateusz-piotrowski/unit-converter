@@ -1,55 +1,41 @@
 package converter
 
+enum class Unit (val value: Double, val short: String, val single: String, val multi: String, val type: Int) {
+    REF(1.0,"???","???","???",0),
+    METER(1.0, "m", "meter", "meters", 0),
+    KILOMETER(1000.0, "km", "kilometer", "kilometers", 0 ),
+    MILLIMETER(0.001, "mm", "millimeter", "millimeters", 0),
+    CENTIMETER(0.01,"cm", "centimeter", "centimeters", 0 ),
+    MILE(1609.35,"mi", "mile", "miles", 0 ),
+    YARD(0.9144, "yd", "yard", "yards", 0 ),
+    FOOT(0.3048, "ft", "foot", "feet", 0 ),
+    INCH(0.0254, "in", "inch", "inches", 0 ),
+    GRAM(1.0, "g", "gram", "grams", 1 ),
+    KILOGRAM(1000.0, "kg", "kilogram", "kilograms", 1 ),
+    MILLIGRAM(0.001, "mg", "milligram", "milligrams", 1 ),
+    POUND(453.592, "lb", "pound", "pounds", 1 ),
+    OUNCE(28.3495, "oz", "ounce", "ounces", 1)
+}
 fun main() {
-    print("Enter a number and a measure of length: ")
-    val input = readlnOrNull()?.trim() ?: return
-    val parts = input.split(" ", limit = 2).map { it.trim() }
+    var input = ""
+    while (true) {
+        println("Enter what you want to convert (or exit):")
+        input = readln().lowercase()
+        if (input == "exit") break // 1
 
-    if (parts.size != 2) {
-        println("Wrong input. Unknown unit $input")
-        return
-    }
+        val (num, from, dir, to) = input.split(" ")
+        var fromVal = Unit.REF
+        var toVal = Unit.REF
 
-    val valueText = parts[0]
-    val unitText = parts[1].lowercase()
-
-    val value = valueText.toDoubleOrNull()
-    if (value == null) {
-        println("Wrong input. Unknown unit $input")
-        return
-    }
-
-    val toMeterFactor = when (unitText) {
-        "m", "meter", "meters" -> 1.0
-        "km", "kilometer", "kilometers" -> 1000.0
-        "cm", "centimeter", "centimeters" -> 0.01
-        "mm", "millimeter", "millimeters" -> 0.001
-        "mi", "mile", "miles" -> 1609.35
-        "yd", "yard", "yards" -> 0.9144
-        "ft", "foot", "feet" -> 0.3048
-        "in", "inch", "inches" -> 0.0254
-        else -> {
-            println("Wrong input. Unknown unit $unitText")
-            return
+        for (i in Unit.values()) {
+            if (from in listOf(i.short, i.single, i.multi)) { fromVal = i }
+            if (to in listOf(i.short, i.single, i.multi)) { toVal = i }
         }
+        if (from in listOf(fromVal.short, fromVal.single, fromVal.multi) &&
+            to in listOf(toVal.short, toVal.single, toVal.multi) && fromVal.type == toVal.type) {
+            val convert = (num.toDouble() * fromVal.value) / toVal.value
+            println("${num.toDouble()} ${if (num.toDouble() == 1.0) fromVal.single else fromVal.multi} is " +
+                    "$convert ${if (convert == 1.0) toVal.single else toVal.multi}")
+        } else { println("Conversion from ${fromVal.multi} to ${toVal.multi} is impossible")}
     }
-
-    val inMeters = value * toMeterFactor
-
-    // Choose singular or plural for the input unit
-    val inputUnitName = when (unitText) {
-        "m", "meter", "meters" -> if (value == 1.0) "meter" else "meters"
-        "km", "kilometer", "kilometers" -> if (value == 1.0) "kilometer" else "kilometers"
-        "cm", "centimeter", "centimeters" -> if (value == 1.0) "centimeter" else "centimeters"
-        "mm", "millimeter", "millimeters" -> if (value == 1.0) "millimeter" else "millimeters"
-        "mi", "mile", "miles" -> if (value == 1.0) "mile" else "miles"
-        "yd", "yard", "yards" -> if (value == 1.0) "yard" else "yards"
-        "ft", "foot", "feet" -> if (value == 1.0) "foot" else "feet"
-        "in", "inch", "inches" -> if (value == 1.0) "inch" else "inches"
-        else -> "???" // should not happen here
-    }
-
-    val meterName = if (inMeters == 1.0) "meter" else "meters"
-
-    println("${value}0 $inputUnitName is ${inMeters} $meterName")
 }

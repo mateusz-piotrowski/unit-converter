@@ -4,9 +4,9 @@ import kotlin.math.max
 import kotlin.math.min
 
 class InputToken(
-        val content: Any,
-        /** Position in range.*/
-        val range: IntRange
+    val content: Any,
+    /** Position in range.*/
+    val range: IntRange
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -24,8 +24,8 @@ class InputToken(
     }
 
     override fun toString() =
-            if (content::class.simpleName == "String") "$content"
-            else "$content(${content::class.simpleName})"
+        if (content::class.simpleName == "String") "$content"
+        else "$content(${content::class.simpleName})"
 }
 
 /**Compares two output strings by words (splitted by spaces, commas etc).
@@ -42,13 +42,13 @@ class InputToken(
  * @param errorContextStd number of words in [myStr] and [hisStr] before and after the error word.
  * @param moreIgnoredSymbolsRegex add some symbols in regex notation to ignore. For example: "\.," - will ignore dot or comma. */
 class WordComparer(
-        val myStr: String,
-        val hisStr: String,
-        val roundDoubleTo: Int = 2,
-        val integersAsDoubles: Boolean = false,
-        val trimErrorOnlyByLine: Boolean = true,
-        val errorContextStd: Int = 1,
-        val moreIgnoredSymbolsRegex: String = ""
+    val myStr: String,
+    val hisStr: String,
+    val roundDoubleTo: Int = 2,
+    val integersAsDoubles: Boolean = false,
+    val trimErrorOnlyByLine: Boolean = true,
+    val errorContextStd: Int = 1,
+    val moreIgnoredSymbolsRegex: String = ""
 ) {
     /** Parse either double, long, word. */
 
@@ -56,32 +56,29 @@ class WordComparer(
 
     private fun tokenizeWordsRegex(str: String): List<InputToken> {
         return wordRegex.findAll(str)
-                .map { match ->
-                    val (_, double, _, long, word) = match.groups.map { it?.value }
+            .map { match ->
+                val (_, double, _, long, word) = match.groups.map { it?.value }
 
-                    val content: Any = when {
-                        long?.toLongOrNull() != null ->
-                            if (integersAsDoubles) long.toDouble() else long.toLong()
+                val content: Any = when {
+                    long?.toLongOrNull() != null ->
+                        if (integersAsDoubles) long.toDouble() else long.toLong()
 
-                        double?.toDoubleOrNull() != null -> {
-                            // Locale.US puts a dot separator
-                            "%.${roundDoubleTo}f".format(Locale.US, double.toDouble()).toDouble()
-                        }
-
-                        else -> match.value
+                    double?.toDoubleOrNull() != null -> {
+                        // Locale.US puts a dot separator
+                        "%.${roundDoubleTo}f".format(Locale.US, double.toDouble()).toDouble()
                     }
-                    InputToken(content, match.range)
-                }.toList()
+
+                    else -> match.value
+                }
+                InputToken(content, match.range)
+            }.toList()
     }
 
 
     fun compare(): CheckResult {
         // I am author
-        val myTokens = tokenizeWordsRegex(myStr)
-        val hisTokens = tokenizeWordsRegex(hisStr)
-//        println("authorString: $myStr")
-//        println("authorTokens: $myTokens")
-//        println("studentTokens: $hisTokens")
+        val myTokens = tokenizeWordsRegex(myStr.lowercase())
+        val hisTokens = tokenizeWordsRegex(hisStr.lowercase())
 
         val badTokenIdx = myTokens.zip(hisTokens).indexOfFirst { (my, his) -> my != his }
 
@@ -113,7 +110,7 @@ class WordComparer(
             }
             return CheckResult(false, "Your output ...$hisContext... doesn't match with ...$myContext...")
         }
-    
+
         // check unequal size after other mistakes.
         if (hisTokens.size < myTokens.size) {
             return CheckResult(false, "Your output is too short. " +
