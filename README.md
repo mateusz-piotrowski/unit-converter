@@ -1,23 +1,83 @@
-# New git repository template
+# Unit Converter (Kotlin)
 
 ## Description
 
-The project contains basic files to the new git repository.
+This project is a console-based Unit Converter application written in Kotlin. It converts between various units of measurement, including:
+- **Length** conversions (meter, kilometer, millimeter, centimeter, mile, yard, foot, inch)
+- **Weight** conversions (gram, kilogram, milligram, pound, ounce)
+- **Temperature** conversions (Celsius, Fahrenheit, Kelvin)
+
+The application handles input validation, supports both singular and plural unit names, and provides accurate conversions based on standard conversion ratios.
 
 ## Motivation
 
-The projects has been created to easier setup new git repository.
+This project was developed to practice console-based application development in Kotlin, including enum-based unit management, conversion algorithms, and input parsing with error handling.
+
+## Stack & Requirements
+
+- **Language:** Kotlin
+- **Build System:** Gradle
+- **JDK:** 17 or higher (recommended)
 
 ## Getting Started
 
-To use this template:
+### Prerequisites
+
+Ensure you have the Java Development Kit (JDK) installed on your system.
+
+### Installation
 
 1. Clone the repository:
    ```bash
    git clone <repository-url>
+   cd "Unit Converter"
    ```
-2. Customize the files as needed.
-3. Push your changes to your new repository.
+2. Open the project in an IDE that supports Kotlin (e.g., IntelliJ IDEA).
+
+### Running the Application
+
+You can run the `Main.kt` file directly from your IDE, which is located in `Unit Converter/task/src/converter/Main.kt`.
+
+Alternatively, use the Gradle wrapper from the command line:
+
+```bash
+./gradlew run
+```
+
+*Note: On Windows, use `gradlew.bat run`.*
+
+## Scripts & Commands
+
+- `./gradlew build`: Compiles the project and runs tests.
+- `./gradlew run`: Executes the main application.
+- `./gradlew test`: Runs the automated test suite.
+- `./gradlew clean`: Deletes the build directory.
+
+## Tests
+
+The project includes tests powered by the `hs-test` framework. To run tests:
+
+```bash
+./gradlew test
+```
+
+## Project Structure
+
+```text
+.
+├── Unit Converter
+│   ├── task
+│   │   ├── src/converter/Main.kt       # Main entry point
+│   │   └── test/                       # Project tests
+│   └── ... (stage-specific task files)
+├── build.gradle                   # Gradle build configuration
+├── settings.gradle                # Gradle project settings
+└── ...
+```
+
+## Environment Variables
+
+No specific environment variables are required for this project.
 
 ## Code of Conduct
 
